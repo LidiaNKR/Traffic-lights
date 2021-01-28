@@ -27,21 +27,19 @@ class ViewController: UIViewController {
         greenLightOfTrafficView.layer.cornerRadius = 50
     }
 
-
-
     @IBAction func startButtonPassed() {
-        if redLightofTrafficView.alpha != 0 {
+        if redLightofTrafficView.alpha == 0.3 {
             redLightofTrafficView.alpha = 1
             changeLightsButton.setTitle("NEXT", for: .normal)
         }
-        else if yellowLightOfTrafficView.alpha != 0 {
-            redLightofTrafficView.alpha = 0.3
+        else if redLightofTrafficView.alpha == 1 {
             yellowLightOfTrafficView.alpha = 1
+            redLightofTrafficView.alpha = 0.3
             changeLightsButton.setTitle("NEXT", for: .normal)
         }
-        else if greenLightOfTrafficView.alpha != 0 {
-            yellowLightOfTrafficView.alpha = 0.3
+        else if yellowLightOfTrafficView.alpha == 1 {
             greenLightOfTrafficView.alpha = 1
+            yellowLightOfTrafficView.alpha = 0.3
             changeLightsButton.setTitle("NEXT", for: .normal)
         }
     }
