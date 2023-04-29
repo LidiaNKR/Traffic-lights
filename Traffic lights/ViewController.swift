@@ -7,40 +7,55 @@
 
 import UIKit
 
+enum CurrentLight {
+    case red, yellow, green
+}
+
 class ViewController: UIViewController {
 
-    @IBOutlet var redLightofTrafficView: UIView!
-    @IBOutlet var yellowLightOfTrafficView: UIView!
-    @IBOutlet var greenLightOfTrafficView: UIView!
+    @IBOutlet var redLightView: UIView!
+    @IBOutlet var yellowLightView: UIView!
+    @IBOutlet var greenLightView: UIView!
     
     @IBOutlet var changeLightsButton: UIButton!
     
+    private var currentLight = CurrentLight.red
+    private let lightOn: CGFloat = 1
+    private let lightOff: CGFloat = 0.3
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        redLightofTrafficView.alpha = 0.3
-        redLightofTrafficView.layer.cornerRadius = 50
         
-        yellowLightOfTrafficView.alpha = 0.3
-        yellowLightOfTrafficView.layer.cornerRadius = 50
+        changeLightsButton.layer.cornerRadius = 10
         
-        greenLightOfTrafficView.alpha = 0.3
-        greenLightOfTrafficView.layer.cornerRadius = 50
-        
-        changeLightsButton.setTitle("START", for: .normal)
+        redLightView.alpha = lightOff
+        yellowLightView.alpha = lightOff
+        greenLightView.alpha = lightOff
+    }
+    
+    override func viewWillLayoutSubviews() {
+        redLightView.layer.cornerRadius = redLightView.frame.width / 2
+        yellowLightView.layer.cornerRadius = yellowLightView.frame.width / 2
+        greenLightView.layer.cornerRadius = greenLightView.frame.width / 2
     }
 
     @IBAction func startButtonPassed() {
         if changeLightsButton.currentTitle == "START" {
-            redLightofTrafficView.alpha = 1
             changeLightsButton.setTitle("NEXT", for: .normal)
         }
-        else if redLightofTrafficView.alpha == 1 {
-            yellowLightOfTrafficView.alpha = 1
-            redLightofTrafficView.alpha = 0.3
-        }
-        else if yellowLightOfTrafficView.alpha == 1 {
-            greenLightOfTrafficView.alpha = 1
-            yellowLightOfTrafficView.alpha = 0.3
+        switch currentLight {
+        case .red:
+            greenLightView.alpha = lightOff
+            redLightView.alpha = lightOn
+            currentLight = .yellow
+        case .yellow:
+            redLightView.alpha = lightOff
+            yellowLightView.alpha = lightOn
+            currentLight = .green
+        case .green:
+            yellowLightView.alpha = lightOff
+            greenLightView.alpha = lightOn
+            currentLight = .red
         }
     }
 }
